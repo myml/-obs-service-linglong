@@ -1,0 +1,16 @@
+name: "obs-service-linglong"
+arch: "all"
+platform: "linux"
+version: "v0.0.1"
+section: "default"
+priority: "extra"
+maintainer: "wurongjie <wurongjie@deepin.org>"
+description: |
+ This is a source service for openSUSE Build Service.
+ It supports downloading from git repositories and generate debian package file.
+ Requires linglong.yaml file support. https://linglong.dev .
+homepage: "https://github.com/myml/obs-service-linglong"
+license: "MIT"
+files:
+  ./linglong: "/usr/lib/obs/service/linglong"
+  ./linglong.service: "/usr/lib/obs/service/linglong.service"

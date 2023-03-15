@@ -1,0 +1,30 @@
+name: Package
+
+on:
+  push:
+    branches:
+      - main
+    tags: ["v*.*.*"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          cache: true
+      - name: Install
+        run: |
+          go install github.com/goreleaser/nfpm/cmd/nfpm@latest
+      - name: Build
+        run: |
+          /home/runner/go/bin/nfpm package --packager deb
+          /home/runner/go/bin/nfpm package --packager rpm
+      - uses: actions/upload-artifact@v3
+        with:
+          name: obs-service-linglong
+          path: |
+            "*.deb"
+            "*.rpm"
