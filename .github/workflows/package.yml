@@ -11,17 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Set up Go
-        uses: actions/setup-go@v3
-        with:
-          cache: true
-      - name: Install
+      - name: Package
         run: |
-          go install github.com/goreleaser/nfpm/cmd/nfpm@latest
-      - name: Build
-        run: |
-          /home/runner/go/bin/nfpm package --packager deb
-          /home/runner/go/bin/nfpm package --packager rpm
+          wget https://github.com/goreleaser/nfpm/releases/download/v2.26.0/nfpm_2.26.0_Linux_x86_64.tar.gz
+          tar -xvf nfpm_2.26.0_Linux_x86_64.tar.gz
+          ./nfpm package --packager deb
+          ./nfpm package --packager rpm
       - uses: actions/upload-artifact@v3
         with:
           name: obs-service-linglong
