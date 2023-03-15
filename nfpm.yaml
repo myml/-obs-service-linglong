@@ -11,6 +11,8 @@ description: |
  Requires linglong.yaml file support. https://linglong.dev .
 homepage: "https://github.com/myml/obs-service-linglong"
 license: "MIT"
-files:
-  ./linglong: "/usr/lib/obs/service/linglong"
-  ./linglong.service: "/usr/lib/obs/service/linglong.service"
+contents:
+  - src: linglong
+    dst: /usr/lib/obs/service/
+  - src: linglong.service
+    dst: /usr/lib/obs/service/
