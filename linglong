@@ -73,8 +73,8 @@ repoDir=${{LINGLONG_REPO_DIR:=/var/cache/linglong/repo}}
 debDir=${{LINGLONG_DEB_DIR:=/var/cache/linglong/deb}}
 mkdir -p $repoDir
 ostree init --repo=$repoDir --mode=bare-user-only
-ostree --repo=$repoDir commit --branch=linglong/{package}/{version}/x86_64/devel --tree=tar=$debDir/linglong-{package}-{version}-x86_64-devel.tar
-ostree --repo=$repoDir commit --branch=linglong/{package}/{version}/x86_64/runtime --tree=tar=$debDir/linglong-{package}-{version}-x86_64-runtime.tar
+ostree --repo=$repoDir commit --branch=linglong/{package}/{version}/x86_64/devel --tree=tar=$debDir/linglong-{package}-{version}-x86_64-devel.tar.zst
+ostree --repo=$repoDir commit --branch=linglong/{package}/{version}/x86_64/runtime --tree=tar=$debDir/linglong-{package}-{version}-x86_64-runtime.tar.zst
 '''
 with open(outdir + "/postinst", 'w', encoding='utf-8') as w_f:
     w_f.write(postinst)
@@ -96,9 +96,9 @@ debDir=/var/cache/linglong/deb
 mkdir -p DEB/DEBIAN DEB$debDir
 cp control postinst postrm DEB/DEBIAN/
 chmod +x DEB/DEBIAN/postinst DEB/DEBIAN/postrm
-ostree --repo=/home/abuild/.cache/linglong-builder/repo export {package}/{version}/x86_64/devel -o DEB$debDir/linglong-{package}-{version}-x86_64-devel.tar
-ostree --repo=/home/abuild/.cache/linglong-builder/repo export {package}/{version}/x86_64/runtime -o DEB$debDir/linglong-{package}-{version}-x86_64-runtime.tar
-dpkg-deb -b --root-owner-group ./DEB ../OTHER
+ostree --repo=/home/abuild/.cache/linglong-builder/repo export {package}/{version}/x86_64/devel | zstd -o DEB$debDir/linglong-{package}-{version}-x86_64-devel.tar.zst
+ostree --repo=/home/abuild/.cache/linglong-builder/repo export {package}/{version}/x86_64/runtime | zstd -o DEB$debDir/linglong-{package}-{version}-x86_64-runtime.tar.zst
+dpkg-deb -b -Znone --root-owner-group ./DEB ../OTHER
 '''
 with open(outdir + "/deb.bash", 'w', encoding='utf-8') as w_f:
     w_f.write(deb)
