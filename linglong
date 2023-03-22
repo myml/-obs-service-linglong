@@ -4,8 +4,9 @@ import os
 import yaml
 
 # 获取outdir参数
-outdir = sys.argv[2]
-linglongFile = "linglong.yaml"
+# 参数 linglong --file linglong.yaml --outdir $dir
+outdir = sys.argv[4]
+linglongFile = sys.argv[2]
 
 # 读取linglong文件
 with open(linglongFile, 'r') as f:
