@@ -37,7 +37,7 @@ def toDebDepend(depend):
         id = fields[0]
         version = fields[1]
     else:
-        version = depend['version']
+        version = str(depend['version'])
     vs = version.split(".")
     if len(vs) <= 3:
         min = ".".join(vs)
