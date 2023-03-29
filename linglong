@@ -25,7 +25,7 @@ if (lconf['source']['kind']=="git"):
     os.system("tar cvfz " + outdir + "/git_source.tar.zst .linglong-target")
 
 #### 准备打包 deb 所需要的文件 ####
-package = lconf['package']['id']
+package = lconf['package']['id'].lower()
 version = lconf['package']['version']
 depends = ""
 
