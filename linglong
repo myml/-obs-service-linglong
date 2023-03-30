@@ -25,7 +25,7 @@ if (lconf['source']['kind']=="git"):
     os.system("tar cvfz " + outdir + "/git_source.tar.zst .linglong-target")
 
 #### 准备打包 deb 所需要的文件 ####
-package = lconf['package']['id'].lower()
+package = lconf['package']['id']
 version = lconf['package']['version']
 depends = ""
 
@@ -38,6 +38,7 @@ def toDebDepend(depend):
         version = fields[1]
     else:
         version = str(depend['version'])
+    id = id.lower()
     vs = version.split(".")
     if len(vs) <= 3:
         min = ".".join(vs)
@@ -57,7 +58,7 @@ if "depends" in lconf:
         deps.append(toDebDepend(lconf['depends'][i]))
 if len(deps)>0:
     depends = "\nDepends: " + ", ".join(deps)
-control=f'''Package: linglong.{package}
+control=f'''Package: linglong.{package.lower()}
 Version: {version}
 Architecture: amd64
 Maintainer: wurongjie <wurongjie@deepin.org>{depends}
